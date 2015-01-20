@@ -5,19 +5,20 @@ end_element="<\/span>"
 default_items=10
 
 ###input parameters####
-#The object you want to see
+#Parameter #1: the "finnkode"
 object_id=$1
 
-#Scan this many objects on either side. Ads may be deleted, so scan several
+#Scan this many objects on either side. Ads may be deleted, so scan several.
+#This is a optional parameter
 steps=${2:-$default_items}
 
 
 
-#Calculate ranges
+#####Calculate ranges
 start=$(($object_id - $steps))
 end=$(($object_id + $steps))
 
-#Loop over the sequence
+#####Loop over the sequence
 for i in $(seq $start 1 $end); do
         #get the html,  use sed to find the last changed span and cut the  extra lines
         str=$(curl -L  -s $url$i | sed -n "/$start_element/, /$end_element/p"  | sed '1d;$d')
