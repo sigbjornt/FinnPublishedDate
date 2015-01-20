@@ -20,10 +20,10 @@ end=$(($object_id + $steps))
 
 #####Loop over the sequence
 for i in $(seq $start 1 $end); do
-        #get the html,  use sed to find the last changed span and cut the  extra lines
+        #get the html,  use sed to find the "last changed" span and cut the  extra lines
         str=$(curl -L  -s $url$i | sed -n "/$start_element/, /$end_element/p"  | sed '1d;$d')
         #Print extra info for the primary object
         if [ "$object_id" -eq "$i" ]; then echo  "Your item ($i)->       $str";
         #Print the last changed date if found
-        elif [ ! -z "$str" -a "$str" != " " ]; then echo "Item $i where last updated $str";fi
+        elif [ ! -z "$str" -a "$str" != " " ]; then echo "Item $i was last updated $str";fi
 done
